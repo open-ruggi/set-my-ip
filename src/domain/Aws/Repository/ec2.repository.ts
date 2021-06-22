@@ -11,7 +11,7 @@ export class Ec2Repository {
 
     constructor(region: string) {
         this.region = region
-        this.ec2 = new AWS.EC2({ region: this.region,credentials: fromIni({ profile: 'ec2' })  })
+        this.ec2 = new AWS.EC2({ region: this.region })
         this.instances = []
     }
 

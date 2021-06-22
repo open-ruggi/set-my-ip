@@ -21,20 +21,23 @@ export class AwsController implements PluginInterface {
     const region = regionAnswer["region"]
 
     const ec2 = new ec2Service(region)
-  //==================================================================================================================================
+    //==================================================================================================================================
     const objInstance = await ec2.instances()
     const instanceAnswer: Answers = await prompt.showQuestion(objInstance.listInstance)
     const instance = objInstance.instances[instanceAnswer["instance"]]
-  //==================================================================================================================================
+    //==================================================================================================================================
+
     const objSecurityGroups = ec2.securityGroups(instance)
-    const securityGroupAnswer: Answers = await prompt.showQuestion( objSecurityGroups.listSecurityGroup)
+    const securityGroupAnswer: Answers = await prompt.showQuestion(objSecurityGroups.listSecurityGroup)
     const securityGroup = objSecurityGroups.securityGroups[securityGroupAnswer["securityGroups"]]
-  //==================================================================================================================================  
+    //==================================================================================================================================  
+
     const objRules = await ec2.rules(securityGroup)
     const rulesAnswer: Answers = await prompt.showQuestion(objRules.listRules)
     const updateRule = objRules.rules[rulesAnswer["rules"]]
-  //==================================================================================================================================  
-    await ec2.updateRule(securityGroup,updateRule)
+    //==================================================================================================================================  
+
+    await ec2.updateRule(securityGroup, updateRule)
   }
 
 }
